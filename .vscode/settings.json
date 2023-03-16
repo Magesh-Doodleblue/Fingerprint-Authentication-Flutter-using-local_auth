@@ -3,5 +3,6 @@
     "cmake.sourceDirectory": "${workspaceFolder}/linux",
     "editor.codeActionsOnSave": {
         "source.fixAll": true
-    }
+    },
+    "C_Cpp.errorSquiggles": "enabled"
 }

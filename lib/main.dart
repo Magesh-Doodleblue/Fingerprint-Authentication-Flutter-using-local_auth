@@ -31,15 +31,17 @@ class _MyAppState extends State<MyApp> {
         _authorized = 'Authenticating';
       });
       authenticated = await auth.authenticate(
-          localizedReason: 'Let OS determine authentication method',
+          localizedReason: 'Verify Yourself',
           options: const AuthenticationOptions(
-              useErrorDialogs: true, biometricOnly: true, stickyAuth: true));
+            useErrorDialogs: true,
+            //biometricOnly: true,
+          ));
 
       setState(() {
         _isAuthenticating = false;
       });
     } on PlatformException catch (e) {
-      print(e);
+      debugPrint(e as String?);
       setState(() {
         _isAuthenticating = false;
         _authorized = "Error - ${e.message}";
@@ -60,23 +62,40 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        useMaterial3: true,
+        brightness: Brightness.dark,
+      ),
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
+          elevation: 10,
           title: const Text('Biometric Authentication'),
         ),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              const Icon(
+                Icons.fingerprint,
+                size: 70,
+              ),
+              const SizedBox(
+                height: 30,
+              ),
               Text('Current State: $_authorized\n'),
               (_isAuthenticating)
                   ? ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.blueAccent),
                       onPressed: _cancelAuthentication,
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: const [
-                          Text("Cancel Authentication"),
+                          Text(
+                            "Cancel Authentication",
+                            style: TextStyle(fontSize: 20, color: Colors.black),
+                          ),
                           Icon(Icons.cancel),
                         ],
                       ),
@@ -84,12 +103,22 @@ class _MyAppState extends State<MyApp> {
                   : Column(
                       children: [
                         ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.blueAccent),
                           onPressed: _authenticate,
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: const [
-                              Text('Authenticate'),
-                              Icon(Icons.fingerprint),
+                              Text(
+                                'Authenticate',
+                                style: TextStyle(
+                                    fontSize: 20, color: Colors.black),
+                              ),
+                              Icon(
+                                Icons.fingerprint,
+                                size: 40,
+                                color: Colors.white,
+                              ),
                             ],
                           ),
                         ),
