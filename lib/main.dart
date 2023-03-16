@@ -35,6 +35,7 @@ class _MyAppState extends State<MyApp> {
           options: const AuthenticationOptions(
             useErrorDialogs: true,
             //biometricOnly: true,
+            //this line will allow only fingerprint
           ));
 
       setState(() {
