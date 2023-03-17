@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:local_auth/local_auth.dart';
 
+import 'video_player_screen.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -60,6 +62,8 @@ class _MyAppState extends State<MyApp> {
     setState(() => _isAuthenticating = false);
   }
 
+//when the value of _authorized == "Authorized" i need to redirect to next page
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -84,47 +88,68 @@ class _MyAppState extends State<MyApp> {
               const SizedBox(
                 height: 30,
               ),
-              Text('Current State: $_authorized\n'),
-              (_isAuthenticating)
-                  ? ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blueAccent),
-                      onPressed: _cancelAuthentication,
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: const [
-                          Text(
-                            "Cancel Authentication",
-                            style: TextStyle(fontSize: 20, color: Colors.black),
-                          ),
-                          Icon(Icons.cancel),
-                        ],
-                      ),
-                    )
-                  : Column(
-                      children: [
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.blueAccent),
-                          onPressed: _authenticate,
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: const [
-                              Text(
-                                'Authenticate',
-                                style: TextStyle(
-                                    fontSize: 20, color: Colors.black),
-                              ),
-                              Icon(
-                                Icons.fingerprint,
-                                size: 40,
-                                color: Colors.white,
-                              ),
-                            ],
-                          ),
+              Text('Current State: $_authorized\n\n'),
+              if (_authorized == "Authorized")
+                Builder(
+                  builder: (context) => ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const VideoPlayerScreen(),
                         ),
-                      ],
-                    ),
+                      );
+                    },
+                    child: const Text('Go to VideoPlayerScreen'),
+                  ),
+                ),
+              const SizedBox(
+                height: 20,
+              ),
+              if (!_isAuthenticating)
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blueAccent,
+                  ),
+                  onPressed: _authenticate,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: const [
+                      Text(
+                        'Authenticate',
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.black,
+                        ),
+                      ),
+                      Icon(
+                        Icons.fingerprint,
+                        size: 40,
+                        color: Colors.white,
+                      ),
+                    ],
+                  ),
+                ),
+              if (_isAuthenticating)
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blueAccent,
+                  ),
+                  onPressed: _cancelAuthentication,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: const [
+                      Text(
+                        "Cancel Authentication",
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.black,
+                        ),
+                      ),
+                      Icon(Icons.cancel),
+                    ],
+                  ),
+                ),
             ],
           ),
         ),
