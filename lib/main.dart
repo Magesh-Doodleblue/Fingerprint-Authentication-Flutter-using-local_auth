@@ -31,13 +31,13 @@ class _MyAppState extends State<MyApp> {
         _authorized = 'Authenticating';
       });
       authenticated = await auth.authenticate(
-          localizedReason: 'Verify Yourself',
-          options: const AuthenticationOptions(
-            useErrorDialogs: true,
-            //biometricOnly: true,
-            //this line will allow only fingerprint
-          ));
-
+        localizedReason: 'Verify Yourself',
+        options: const AuthenticationOptions(
+          useErrorDialogs: true,
+          //biometricOnly: true,
+          //this line will allow only fingerprint
+        ),
+      );
       setState(() {
         _isAuthenticating = false;
       });
