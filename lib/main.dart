@@ -92,6 +92,9 @@ class _MyAppState extends State<MyApp> {
               if (_authorized == "Authorized")
                 Builder(
                   builder: (context) => ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blueAccent,
+                    ),
                     onPressed: () {
                       Navigator.push(
                         context,
@@ -100,7 +103,13 @@ class _MyAppState extends State<MyApp> {
                         ),
                       );
                     },
-                    child: const Text('Go to VideoPlayerScreen'),
+                    child: const Text(
+                      'Go to VideoPlayerScreen',
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.black,
+                      ),
+                    ),
                   ),
                 ),
               const SizedBox(
